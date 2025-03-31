@@ -16,5 +16,14 @@ RSpec.describe StringCalculator do
     it "returns sum of two numbers" do
       expect(string_calculator.add("1,5")).to eq(6)
     end
+
+    it "handles multiple numbers" do
+      expect(string_calculator.add("1,2,3,4,5,6,7,8,9,10")).to eq(55)
+    end
+
+    it "handles large input" do
+      numbers = (1..1000).to_a.join(",") # "1,2,3,4,...,1000"
+      expect(string_calculator.add(numbers)).to eq(500500) # Sum of first 1000 natural numbers
+    end
   end
 end

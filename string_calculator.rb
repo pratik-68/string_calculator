@@ -6,16 +6,15 @@ class StringCalculator
       delimiter_section, numbers = numbers.split("\n", 2)
 
       if delimiter_section[2] == "[" && delimiter_section[-1] == "]"
-        delimiter = delimiter_section[3..-2] # Extract everything inside [ ]
+        delimiters = delimiter_section.scan(/\[(.*?)\]/).flatten
       else
-        delimiter = delimiter_section[2..] # Single-character delimiter
+        delimiters = [delimiter_section[2..]] # Single-character delimiter
       end
-    else
-      delimiter = ","
     end
 
-    delimiter = Regexp.escape(delimiter)
-    num_array = numbers.split(/#{delimiter}|\n/).map(&:to_i)
+    # Replace all delimiters with a common separator (",")
+    delimiters.each { |delim| numbers.gsub!(delim, ",") } if delimiters
+    num_array = numbers.split(/,|\n/).map(&:to_i)
 
     # Raise error for negative numbers
     negatives = num_array.select { |num| num < 0 }

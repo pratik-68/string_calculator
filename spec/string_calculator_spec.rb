@@ -49,5 +49,9 @@ RSpec.describe StringCalculator do
     it "support delimiters with larger length with [] format" do
       expect(string_calculator.add("//[***]\n1***2***3")).to eq(6)
     end
+
+    it "support multiple delimiters with [] format" do
+      expect(string_calculator.add("//[*][%]\n1*2%3")).to eq(6)
+    end
   end
 end

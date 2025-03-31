@@ -25,5 +25,9 @@ RSpec.describe StringCalculator do
       numbers = (1..1000).to_a.join(",") # "1,2,3,4,...,1000"
       expect(string_calculator.add(numbers)).to eq(500500) # Sum of first 1000 natural numbers
     end
+
+    it "handles new lines between numbers" do
+      expect(string_calculator.add("1\n2,3")).to eq(6)
+    end
   end
 end

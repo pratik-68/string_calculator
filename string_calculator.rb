@@ -9,6 +9,13 @@ class StringCalculator
       delimiter = ","
     end
 
-    numbers.split(/#{delimiter}|\n/).map(&:to_i).sum
+    num_array = numbers.split(/#{delimiter}|\n/).map(&:to_i)
+
+    # Raise error for negative numbers
+    negatives = num_array.select { |num| num < 0 }
+    raise "negative numbers not allowed #{negatives.join(",")}" if negatives.any?
+
+    # Return sum if negative numbers are not present
+    num_array.sum
   end
 end

@@ -3,12 +3,18 @@ class StringCalculator
     return 0 if numbers.empty?
 
     if numbers.start_with?("//")
-      delimiter, numbers = numbers.split("\n", 2)
-      delimiter = Regexp.escape(delimiter[2..])
+      delimiter_section, numbers = numbers.split("\n", 2)
+
+      if delimiter_section[2] == "[" && delimiter_section[-1] == "]"
+        delimiter = delimiter_section[3..-2] # Extract everything inside [ ]
+      else
+        delimiter = delimiter_section[2..] # Single-character delimiter
+      end
     else
       delimiter = ","
     end
 
+    delimiter = Regexp.escape(delimiter)
     num_array = numbers.split(/#{delimiter}|\n/).map(&:to_i)
 
     # Raise error for negative numbers
